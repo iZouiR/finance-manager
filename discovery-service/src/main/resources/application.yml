@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: discovery-service
+  config:
+    import: configserver:http://localhost:8762
+  cloud:
+    config:
+      fail-fast: true
+
+server:
+  port: 8761
