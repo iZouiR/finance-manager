@@ -1,11 +1,11 @@
 spring:
   application:
-    name: discovery-service
+    name: ${DISCOVERY_NAME}
   config:
-    import: configserver:http://localhost:8762
+    import: configserver:http://${CONFIG_NAME}:${CONFIG_PORT}
   cloud:
     config:
       fail-fast: true
 
 server:
-  port: 8761
+  port: ${DISCOVERY_PORT}
