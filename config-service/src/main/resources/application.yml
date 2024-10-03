@@ -1,6 +1,6 @@
 spring:
   application:
-    name: config-service
+    name: ${CONFIG_NAME}
   cloud:
     config:
       server:
@@ -11,4 +11,4 @@ spring:
     active: native
 
 server:
-  port: 8762
+  port: ${CONFIG_PORT}
