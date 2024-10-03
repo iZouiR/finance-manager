@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.postgresql_db.name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: {{ .Values.postgresql_db.name }}
+spec:
+  replicas: {{ .Values.postgresql_db.deployment.replicas }}
+  selector:
+    matchLabels:
+      tier: {{ .Values.postgresql_db.name }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.postgresql_db.name }}
+    spec:
+      containers:
+        - image: {{ .Values.postgresql_db.deployment.image }}
+          name: {{ .Values.postgresql_db.name }}
+          env:
+            - name: POSTGRES_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql_db.name }}
+                  key: hostname
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql_db.name }}
+                  key: db
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql_db.name }}
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql_db.name }}
+                  key: password
+          ports:
+            - containerPort: {{ .Values.postgresql_db.inner_port }}
+              protocol: TCP
+      restartPolicy: {{ .Values.postgresql_db.deployment.restartPolicy }}

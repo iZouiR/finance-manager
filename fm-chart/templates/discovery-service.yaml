@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.discovery.name }}
+  labels:
+    tier: {{ .Values.discovery.name }}
+spec:
+  ports:
+    - port: {{ .Values.discovery.external_port }}
+      targetPort: {{ .Values.discovery.inner_port }}
+      protocol: TCP
+  type: {{ .Values.discovery.service.type }}
+  selector:
+    tier: {{ .Values.discovery.name }}

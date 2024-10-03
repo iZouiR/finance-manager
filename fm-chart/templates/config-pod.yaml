@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.config.name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: {{ .Values.config.name }}
+spec:
+  containers:
+    - image: {{ .Values.config.pod.image }}
+      name: {{ .Values.config.name }}
+      env:
+        - name: CONFIG_NAME
+          value: {{ .Values.config.name }}
+        - name: CONFIG_PORT
+          value: "{{ .Values.config.inner_port }}"
+  restartPolicy: {{ .Values.config.pod.restartPolicy }}

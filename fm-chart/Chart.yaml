@@ -1,0 +1,10 @@
+apiVersion: v2
+name: finance-manager
+version: 1.0.0
+description: Finance Manager
+type: application
+maintainers:
+  - name: Timofey Kozlov
+    email: iZouiR@jotaro.ru
+    url: https://github.com/iZouiR
+appVersion: 1.0-INTERNSHIP

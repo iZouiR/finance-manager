@@ -1,0 +1,41 @@
+config:
+  name: "config"
+  inner_port: 8762
+  external_port: 8762
+  pod:
+    image: "izouir/fm-config:1.0"
+    restartPolicy: OnFailure
+  service:
+    type: LoadBalancer
+
+db_migration:
+  name: "db-migration"
+  pod:
+    image: "izouir/fm-db-migration:1.0"
+    restartPolicy: OnFailure
+
+discovery:
+  name: "discovery"
+  inner_port: 8761
+  external_port: 8761
+  pod:
+    image: "izouir/fm-discovery:1.0"
+    restartPolicy: OnFailure
+  service:
+    type: LoadBalancer
+
+postgresql_db:
+  name: "postgresql-db"
+  inner_port: 5432
+  external_port: 5432
+  secrets:
+    hostname: ""
+    db: ""
+    username: ""
+    password: ""
+  deployment:
+    replicas: 1
+    image: "postgres:latest"
+    restartPolicy: Always
+  service:
+    type: LoadBalancer
