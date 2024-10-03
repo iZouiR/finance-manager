@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-limit
+      author: Timofey Kozlov
+      changes:
+        - createTable:
+            tableName: limit
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: account
+                  type: bigint
+                  constraints:
+                    foreignKeyName: limit_to_account_id_fk
+                    references: account(id)
+              - column:
+                  name: amount
+                  type: money
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
