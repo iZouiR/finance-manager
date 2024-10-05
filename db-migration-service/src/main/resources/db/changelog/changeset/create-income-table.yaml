@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-income
+      author: Timofey Kozlov
+      changes:
+        - sql:
+            sql: >-
+              CREATE TYPE INCOME_TYPE AS ENUM ('TYPE_TRANSFER', 'TYPE_SALARY', 'TYPE_CASHBACK')
+        - createTable:
+            tableName: income
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: transaction
+                  type: bigint
+                  constraints:
+                    foreignKeyName: income_to_transaction_id_fk
+                    references: transaction(id)
+              - column:
+                  name: type
+                  type: INCOME_TYPE
+                  constraints:
+                    nullable: false

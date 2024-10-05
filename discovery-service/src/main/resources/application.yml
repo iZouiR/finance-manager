@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: ${DISCOVERY_NAME}
+  config:
+    import: configserver:http://${CONFIG_NAME}:${CONFIG_PORT}
+  cloud:
+    config:
+      fail-fast: true
+
+server:
+  port: ${DISCOVERY_PORT}

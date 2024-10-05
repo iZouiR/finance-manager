@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.config.name }}
+  labels:
+    tier: {{ .Values.config.name }}
+spec:
+  ports:
+    - port: {{ .Values.config.external_port }}
+      targetPort: {{ .Values.config.inner_port }}
+      protocol: TCP
+  type: {{ .Values.config.service.type }}
+  selector:
+    tier: {{ .Values.config.name }}

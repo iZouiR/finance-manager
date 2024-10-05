@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ${DB_MIGRATION_NAME}
+  config:
+    import: configserver:http://${CONFIG_NAME}:${CONFIG_PORT}
+  cloud:
+    config:
+      fail-fast: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}

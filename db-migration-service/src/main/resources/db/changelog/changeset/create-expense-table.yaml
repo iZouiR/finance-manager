@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-expense
+      author: Timofey Kozlov
+      changes:
+        - sql:
+            sql: >-
+              CREATE TYPE EXPENSE_CATEGORY AS ENUM ('CATEGORY_FOOD', 'CATEGORY_TECH', 'CATEGORY_ENTERTAINMENT', 'CATEGORY_OTHER')
+        - createTable:
+            tableName: expense
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: transaction
+                  type: bigint
+                  constraints:
+                    foreignKeyName: expense_to_transaction_id_fk
+                    references: transaction(id)
+              - column:
+                  name: category
+                  type: EXPENSE_CATEGORY
+                  constraints:
+                    nullable: false

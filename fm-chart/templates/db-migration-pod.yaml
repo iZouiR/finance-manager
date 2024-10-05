@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.db_migration.name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: {{ .Values.db_migration.name }}
+spec:
+  containers:
+    - image: {{ .Values.db_migration.pod.image }}
+      name: {{ .Values.db_migration.name }}
+      env:
+        - name: DB_MIGRATION_NAME
+          value: {{ .Values.db_migration.name }}
+        - name: CONFIG_NAME
+          value: {{ .Values.config.name }}
+        - name: CONFIG_PORT
+          value: "{{ .Values.config.inner_port }}"
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql_db.name }}
+              key: db
+        - name: DATASOURCE_URL
+          value: jdbc:postgresql://{{ .Values.postgresql_db.name }}:{{ .Values.postgresql_db.inner_port }}/${POSTGRES_DB}
+        - name: DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql_db.name }}
+              key: username
+        - name: DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql_db.name }}
+              key: password
+  restartPolicy: {{ .Values.db_migration.pod.restartPolicy }}

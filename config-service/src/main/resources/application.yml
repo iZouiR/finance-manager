@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: ${CONFIG_NAME}
+  cloud:
+    config:
+      server:
+        native:
+          search-locations:
+            - classpath:/config/{application}
+  profiles:
+    active: native
+
+server:
+  port: ${CONFIG_PORT}

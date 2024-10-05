@@ -1,0 +1,52 @@
+version: '3.15'
+
+name: finance-manager
+services:
+  postgresql-db:
+    container_name: ${POSTGRES_NAME}
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+
+  config:
+    container_name: ${CONFIG_NAME}
+    build: ../config-service
+    environment:
+      CONFIG_NAME: ${CONFIG_NAME}
+      CONFIG_PORT: ${CONFIG_PORT}
+    restart: on-failure
+
+  db-migration:
+    container_name: ${DB_MIGRATION_NAME}
+    build: ../db-migration-service
+    restart: on-failure
+    environment:
+      DB_MIGRATION_NAME: ${DB_MIGRATION_NAME}
+      CONFIG_NAME: ${CONFIG_NAME}
+      CONFIG_PORT: ${CONFIG_PORT}
+      DATASOURCE_URL: jdbc:postgresql://${POSTGRES_NAME}:${POSTGRES_PORT}/${POSTGRES_DB}
+      DATASOURCE_USERNAME: ${POSTGRES_USER}
+      DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - config
+      - postgresql-db
+
+  discovery:
+    container_name: ${DISCOVERY_NAME}
+    build: ../discovery-service
+    restart: on-failure
+    environment:
+      DISCOVERY_NAME: ${DISCOVERY_NAME}
+      DISCOVERY_PORT: ${DISCOVERY_PORT}
+      CONFIG_NAME: ${CONFIG_NAME}
+      CONFIG_PORT: ${CONFIG_PORT}
+    depends_on:
+      - config
+    ports:
+      - ${DISCOVERY_PORT}:${DISCOVERY_PORT}

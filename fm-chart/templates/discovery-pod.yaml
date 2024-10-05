@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Values.discovery.name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: {{ .Values.discovery.name }}
+spec:
+  containers:
+    - image: {{ .Values.discovery.pod.image }}
+      name: {{ .Values.discovery.name }}
+      env:
+        - name: DISCOVERY_NAME
+          value: {{ .Values.discovery.name }}
+        - name: DISCOVERY_PORT
+          value: "{{ .Values.discovery.inner_port }}"
+        - name: CONFIG_NAME
+          value: {{ .Values.config.name }}
+        - name: CONFIG_PORT
+          value: "{{ .Values.config.inner_port }}"
+      ports:
+        - containerPort: {{ .Values.discovery.inner_port }}
+          protocol: TCP
+  restartPolicy: {{ .Values.discovery.pod.restartPolicy }}
