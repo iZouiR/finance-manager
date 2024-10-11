@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: user-management
+  config:
+    import: configserver:http://${APP_HOSTNAME}:${CONFIG_PORT}
+  cloud:
+    config:
+      fail-fast: true
+
+server:
+  port: ${USER_MANAGEMENT_PORT}
