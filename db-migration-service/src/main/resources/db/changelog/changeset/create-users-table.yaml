@@ -3,12 +3,19 @@ databaseChangeLog:
       id: create-user
       author: Timofey Kozlov
       changes:
+        - sql:
+            sql: >-
+              CREATE TYPE USER_ROLE AS ENUM ('ROLE_USER', 'ROLE_ADMIN')
+        - createSequence:
+            sequenceName: user_sequence
+            dataType: bigint
         - createTable:
             tableName: user
             columns:
               - column:
                   name: id
-                  type: bigserial
+                  type: bigint
+                  defaultValueSequenceNext: user_sequence
                   constraints:
                     primaryKey: true
               - column:
@@ -33,6 +40,11 @@ databaseChangeLog:
                   type: varchar(16)
                   constraints:
                     unique: true
+                    nullable: false
+              - column:
+                  name: role
+                  type: USER_ROLE
+                  constraints:
                     nullable: false
               - column:
                   name: name
