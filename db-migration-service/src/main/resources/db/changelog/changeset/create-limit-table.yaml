@@ -3,16 +3,20 @@ databaseChangeLog:
       id: create-limit
       author: Timofey Kozlov
       changes:
+        - createSequence:
+            sequenceName: limit_sequence
+            dataType: bigint
         - createTable:
             tableName: limit
             columns:
               - column:
                   name: id
-                  type: bigserial
+                  type: bigint
+                  defaultValueSequenceNext: limit_sequence
                   constraints:
                     primaryKey: true
               - column:
-                  name: account
+                  name: account_id
                   type: bigint
                   constraints:
                     foreignKeyName: limit_to_account_id_fk
