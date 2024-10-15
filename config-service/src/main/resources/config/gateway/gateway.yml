@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: transaction
+          uri: lb://TRANSACTION
+          predicates:
+            - Path=/transaction-api/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:${DISCOVERY_PORT}/eureka
+
+logging:
+  pattern:
+    console: "%C{1.} [%-5level] %d{HH:mm:ss} - %msg%n"
+
+server:
+  forward-headers-strategy: framework
