@@ -11,3 +11,9 @@ databaseChangeLog:
       file: db/changelog/changeset/create-income-table.yaml
   - include:
       file: db/changelog/changeset/create-expense-table.yaml
+  - include:
+      file: db/changelog/changeset/create-on-transaction-change-balance-trigger.yaml
+  - include:
+      file: db/changelog/changeset/create-on-income-check-transaction-type-trigger.yaml
+  - include:
+      file: db/changelog/changeset/create-on-expense-check-transaction-type-trigger.yaml

@@ -17,7 +17,7 @@ databaseChangeLog:
                     primaryKey: true
 #              - column:
 #                  name: user_id
-#                  type: bigint
+#                  type: varchar?uid?
 #                  constraints:
 #                    foreignKeyName: account_to_user_id_fk
 #                    references: user(id)

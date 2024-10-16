@@ -2,9 +2,6 @@ package org.izouir.transactionservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.izouir.transactionservice.dto.TransactionDto;
-import org.izouir.transactionservice.entity.Account;
-import org.izouir.transactionservice.entity.Transaction;
-import org.izouir.transactionservice.enums.TransactionType;
 import org.izouir.transactionservice.exception.AccountNotFoundException;
 import org.izouir.transactionservice.mapper.TransactionMapper;
 import org.izouir.transactionservice.repository.AccountRepository;
@@ -30,16 +27,6 @@ public class TransactionServiceImpl implements TransactionService {
                         String.format("Account with id = %s not found", accountId)));
         final var transaction = TransactionMapper.toEntity(transactionDto, account);
         transactionRepository.save(transaction);
-        applyTransaction(account, transaction);
-    }
-
-    private void applyTransaction(final Account account, final Transaction transaction) {
-        var difference = transaction.getAmount();
-        if (transaction.getType() == TransactionType.TYPE_EXPENSE) {
-            difference = difference.negate();
-        }
-        account.setBalance(account.getBalance().add(difference));
-        accountRepository.save(transaction.getAccount());
     }
 
     @Override

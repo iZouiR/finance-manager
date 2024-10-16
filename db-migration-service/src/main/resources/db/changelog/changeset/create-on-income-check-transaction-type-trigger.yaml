@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-on-income-check-transaction-type
+      author: Timofey Kozlov
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/sql/on-income-check-transaction-type.sql
