@@ -3,20 +3,24 @@ databaseChangeLog:
       id: create-account
       author: Timofey Kozlov
       changes:
+        - createSequence:
+            sequenceName: account_sequence
+            dataType: bigint
         - createTable:
             tableName: account
             columns:
               - column:
                   name: id
-                  type: bigserial
+                  type: bigint
+                  defaultValueSequenceNext: account_sequence
                   constraints:
                     primaryKey: true
-              - column:
-                  name: user_id
-                  type: bigint
-                  constraints:
-                    foreignKeyName: account_to_user_id_fk
-                    references: user(id)
+#              - column:
+#                  name: user_id
+#                  type: varchar?uid?
+#                  constraints:
+#                    foreignKeyName: account_to_user_id_fk
+#                    references: user(id)
               - column:
                   name: balance
                   type: money

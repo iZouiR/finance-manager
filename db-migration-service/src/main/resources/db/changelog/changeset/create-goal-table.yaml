@@ -3,16 +3,20 @@ databaseChangeLog:
       id: create-goal
       author: Timofey Kozlov
       changes:
+        - createSequence:
+            sequenceName: goal_sequence
+            dataType: bigint
         - createTable:
             tableName: goal
             columns:
               - column:
                   name: id
-                  type: bigserial
+                  type: bigint
+                  defaultValueSequenceNext: goal_sequence
                   constraints:
                     primaryKey: true
               - column:
-                  name: account
+                  name: account_id
                   type: bigint
                   constraints:
                     foreignKeyName: goal_to_account_id_fk

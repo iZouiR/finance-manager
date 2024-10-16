@@ -2,7 +2,7 @@ spring:
   application:
     name: gateway
   config:
-    import: configserver:http://${APP_HOSTNAME}:${CONFIG_PORT}
+    import: configserver:http://config:${CONFIG_PORT}
   cloud:
     config:
       fail-fast: true

@@ -1,9 +1,7 @@
-version: '3.15'
-
 name: finance-manager
 services:
   postgresql-db:
-    container_name: ${POSTGRES_NAME}
+    container_name: ${POSTGRES_HOSTNAME}
     image: postgres:latest
     restart: always
     environment:
@@ -15,22 +13,19 @@ services:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
 
   config:
-    container_name: ${CONFIG_NAME}
+    container_name: config
     build: ../config-service
     environment:
-      CONFIG_NAME: ${CONFIG_NAME}
       CONFIG_PORT: ${CONFIG_PORT}
     restart: on-failure
 
   db-migration:
-    container_name: ${DB_MIGRATION_NAME}
+    container_name: db-migration
     build: ../db-migration-service
     restart: on-failure
     environment:
-      DB_MIGRATION_NAME: ${DB_MIGRATION_NAME}
-      CONFIG_NAME: ${CONFIG_NAME}
       CONFIG_PORT: ${CONFIG_PORT}
-      DATASOURCE_URL: jdbc:postgresql://${POSTGRES_NAME}:${POSTGRES_PORT}/${POSTGRES_DB}
+      DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}
       DATASOURCE_USERNAME: ${POSTGRES_USER}
       DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
@@ -38,15 +33,39 @@ services:
       - postgresql-db
 
   discovery:
-    container_name: ${DISCOVERY_NAME}
+    container_name: discovery
     build: ../discovery-service
     restart: on-failure
     environment:
-      DISCOVERY_NAME: ${DISCOVERY_NAME}
-      DISCOVERY_PORT: ${DISCOVERY_PORT}
-      CONFIG_NAME: ${CONFIG_NAME}
       CONFIG_PORT: ${CONFIG_PORT}
+      DISCOVERY_PORT: ${DISCOVERY_PORT}
     depends_on:
       - config
     ports:
       - ${DISCOVERY_PORT}:${DISCOVERY_PORT}
+
+  transaction:
+    container_name: transaction
+    build: ../transaction-service
+    restart: on-failure
+    environment:
+      CONFIG_PORT: ${CONFIG_PORT}
+      DISCOVERY_PORT: ${DISCOVERY_PORT}
+      DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}
+      DATASOURCE_USERNAME: ${POSTGRES_USER}
+      DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - discovery
+
+  gateway:
+    container_name: gateway
+    build: ../gateway-service
+    restart: on-failure
+    environment:
+      CONFIG_PORT: ${CONFIG_PORT}
+      DISCOVERY_PORT: ${DISCOVERY_PORT}
+      GATEWAY_PORT: ${GATEWAY_PORT}
+    depends_on:
+      - discovery
+    ports:
+      - ${GATEWAY_PORT}:${GATEWAY_PORT}
