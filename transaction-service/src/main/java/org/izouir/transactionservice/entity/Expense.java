@@ -14,14 +14,14 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 import org.izouir.transactionservice.enums.ExpenseCategory;
 
-@Data
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -33,7 +33,7 @@ public class Expense {
     @Column(name = "id", columnDefinition = "BIGINT PRIMARY KEY")
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transaction_id", columnDefinition = "BIGINT REFERENCES transaction (id)")
     private Transaction transaction;
 

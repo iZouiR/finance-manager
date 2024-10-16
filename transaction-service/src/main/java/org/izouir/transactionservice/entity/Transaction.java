@@ -14,7 +14,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcType;
 import org.hibernate.dialect.PostgreSQLEnumJdbcType;
@@ -23,8 +23,8 @@ import org.izouir.transactionservice.enums.TransactionType;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-@Data
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
