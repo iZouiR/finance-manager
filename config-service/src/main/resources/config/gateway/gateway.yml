@@ -7,6 +7,12 @@ spring:
           predicates:
             - Path=/transaction-api/**
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${KEYCLOAK_IP:172.17.0.1}:8080/realms/finance-manager
+
 eureka:
   client:
     serviceUrl:

@@ -69,3 +69,18 @@ services:
       - discovery
     ports:
       - ${GATEWAY_PORT}:${GATEWAY_PORT}
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.0
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://${POSTGRES_NAME}:${POSTGRES_PORT}/${POSTGRES_DB}
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+    command: start-dev --health-enabled=true
+    depends_on:
+      - postgresql-db
+    ports:
+      - ${KEYCLOAK_PORT}:${KEYCLOAK_PORT}
