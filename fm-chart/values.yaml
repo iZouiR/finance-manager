@@ -47,6 +47,13 @@ transaction:
     image: "izouir/fm-transaction:1.0"
     restartPolicy: Always
 
+budget_planning:
+  name: "budget-planning"
+  deployment:
+    replicas: 2
+    image: "izouir/fm-budget-planning:1.0"
+    restartPolicy: Always
+
 gateway:
   name: "gateway"
   inner_port: 8765
