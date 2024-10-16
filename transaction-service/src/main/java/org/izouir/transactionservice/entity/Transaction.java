@@ -48,6 +48,6 @@ public class Transaction {
     @Column(name = "amount", columnDefinition = "MONEY NOT NULL CHECK (amount > 0)")
     private BigDecimal amount;
 
-    @Column(name = "date", columnDefinition = "TIMESTAMP NOT NULL CHECK (date <= NOW())")
+    @Column(name = "date", columnDefinition = "TIMESTAMP NOT NULL DEFAULT NOW() CHECK (date <= NOW())")
     private Timestamp date;
 }

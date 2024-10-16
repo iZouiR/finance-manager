@@ -8,7 +8,6 @@ import org.izouir.transactionservice.repository.AccountRepository;
 import org.izouir.transactionservice.repository.TransactionRepository;
 import org.izouir.transactionservice.service.TransactionService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,7 +18,6 @@ public class TransactionServiceImpl implements TransactionService {
     private final AccountRepository accountRepository;
 
     @Override
-    @Transactional
     public void create(final TransactionDto transactionDto) {
         final var accountId = transactionDto.getAccountId();
         final var account = accountRepository.findById(accountId)
@@ -31,7 +29,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionDto> findAllByAccountId(final Long accountId) {
-        final var transactions = transactionRepository.findAllByAccountId(accountId);
+        final var transactions = transactionRepository.findAllByAccount_Id(accountId);
         return TransactionMapper.toDtoList(transactions);
     }
 }

@@ -31,6 +31,6 @@ public class Account {
 
     // TODO: link to users table
 
-    @Column(name = "balance", columnDefinition = "MONEY NOT NULL")
+    @Column(name = "balance", columnDefinition = "MONEY NOT NULL DEFAULT 0")
     private BigDecimal balance;
 }
