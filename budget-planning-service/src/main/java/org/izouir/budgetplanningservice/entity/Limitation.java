@@ -1,9 +1,7 @@
-package org.izouir.transactionservice.entity;
+package org.izouir.budgetplanningservice.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,9 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcType;
-import org.hibernate.dialect.PostgreSQLEnumJdbcType;
-import org.izouir.transactionservice.enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -28,11 +23,11 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "transaction")
-public class Transaction {
+@Table(name = "limitation")
+public class Limitation {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_seq")
-    @SequenceGenerator(name = "transaction_seq", sequenceName = "transaction_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "limitation_seq")
+    @SequenceGenerator(name = "limitation_seq", sequenceName = "limitation_sequence", allocationSize = 1)
     @Column(name = "id", columnDefinition = "BIGINT PRIMARY KEY")
     private Long id;
 
@@ -40,14 +35,12 @@ public class Transaction {
     @JoinColumn(name = "account_id", columnDefinition = "BIGINT REFERENCES account (id)")
     private Account account;
 
-    @JdbcType(PostgreSQLEnumJdbcType.class)
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", columnDefinition = "TRANSACTION_TYPE NOT NULL")
-    private TransactionType type;
-
     @Column(name = "amount", columnDefinition = "MONEY NOT NULL CHECK (amount > 0)")
     private BigDecimal amount;
 
-    @Column(name = "date", columnDefinition = "TIMESTAMP NOT NULL DEFAULT NOW() CHECK (date <= NOW())")
-    private Timestamp date;
+    @Column(name = "start_date", columnDefinition = "TIMESTAMP NOT NULL DEFAULT NOW() CHECK (start_date >= NOW())")
+    private Timestamp startDate;
+
+    @Column(name = "end_date", columnDefinition = "TIMESTAMP NOT NULL CHECK (end_date > NOW())")
+    private Timestamp endDate;
 }

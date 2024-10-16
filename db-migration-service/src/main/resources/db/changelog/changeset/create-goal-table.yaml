@@ -26,13 +26,16 @@ databaseChangeLog:
                   type: money
                   constraints:
                     nullable: false
+                    checkConstraint: amount > 0
               - column:
                   name: until
                   type: timestamp
                   constraints:
                     nullable: false
+                    checkConstraint: until > NOW()
               - column:
                   name: achieved
                   type: boolean
+                  defaultValueBoolean: false
                   constraints:
                     nullable: false

@@ -57,6 +57,19 @@ services:
     depends_on:
       - discovery
 
+  budget-planning:
+    container_name: budget-planning
+    build: ../budget-planning-service
+    restart: on-failure
+    environment:
+      CONFIG_PORT: ${CONFIG_PORT}
+      DISCOVERY_PORT: ${DISCOVERY_PORT}
+      DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}
+      DATASOURCE_USERNAME: ${POSTGRES_USER}
+      DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - discovery
+
   gateway:
     container_name: gateway
     build: ../gateway-service

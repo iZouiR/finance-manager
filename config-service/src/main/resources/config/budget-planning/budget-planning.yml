@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    jpa:
+      show-sql: false
+      generate-ddl: false
+      hibernate:
+        ddl-auto: validate
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:${DISCOVERY_PORT}/eureka
+
+logging:
+  pattern:
+    console: "%C{1.} [%-5level] %d{HH:mm:ss} - %msg%n"

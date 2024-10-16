@@ -1,4 +1,4 @@
-package org.izouir.transactionservice.entity;
+package org.izouir.budgetplanningservice.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +31,6 @@ public class Account {
 
     // TODO: link to users table
 
-    @Column(name = "balance", columnDefinition = "MONEY NOT NULL DEFAULT 0")
+    @Column(name = "balance", columnDefinition = "MONEY NOT NULL")
     private BigDecimal balance;
 }

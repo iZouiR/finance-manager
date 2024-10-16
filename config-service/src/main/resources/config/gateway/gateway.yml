@@ -6,6 +6,10 @@ spring:
           uri: lb://TRANSACTION
           predicates:
             - Path=/transaction-api/**
+        - id: budget-planning
+          uri: lb://BUDGET-PLANNING
+          predicates:
+            - Path=/budget-planning-api/**
 
 eureka:
   client:

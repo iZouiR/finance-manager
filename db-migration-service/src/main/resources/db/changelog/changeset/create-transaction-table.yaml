@@ -38,6 +38,7 @@ databaseChangeLog:
               - column:
                   name: date
                   type: timestamp
+                  defaultValueDate: NOW()
                   constraints:
                     nullable: false
                     checkConstraint: date <= NOW()
