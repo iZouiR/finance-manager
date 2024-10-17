@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.gateway.name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: {{ .Values.gateway.name }}
+spec:
+  replicas: {{ .Values.gateway.deployment.replicas }}
+  selector:
+    matchLabels:
+      tier: {{ .Values.gateway.name }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.gateway.name }}
+    spec:
+      containers:
+        - image: {{ .Values.gateway.deployment.image }}
+          name: {{ .Values.gateway.name }}
+          env:
+            - name: GATEWAY_PORT
+              value: "{{ .Values.gateway.inner_port }}"
+            - name: DISCOVERY_PORT
+              value: "{{ .Values.discovery.inner_port }}"
+            - name: CONFIG_PORT
+              value: "{{ .Values.config.inner_port }}"
+          ports:
+            - containerPort: {{ .Values.gateway.inner_port }}
+              protocol: TCP
+      restartPolicy: {{ .Values.gateway.deployment.restartPolicy }}

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ${CONFIG_NAME}
+    name: config
   cloud:
     config:
       server:

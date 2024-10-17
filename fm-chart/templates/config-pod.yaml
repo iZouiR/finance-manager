@@ -10,8 +10,6 @@ spec:
     - image: {{ .Values.config.pod.image }}
       name: {{ .Values.config.name }}
       env:
-        - name: CONFIG_NAME
-          value: {{ .Values.config.name }}
         - name: CONFIG_PORT
           value: "{{ .Values.config.inner_port }}"
   restartPolicy: {{ .Values.config.pod.restartPolicy }}

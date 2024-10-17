@@ -10,10 +10,6 @@ spec:
     - image: {{ .Values.db_migration.pod.image }}
       name: {{ .Values.db_migration.name }}
       env:
-        - name: DB_MIGRATION_NAME
-          value: {{ .Values.db_migration.name }}
-        - name: CONFIG_NAME
-          value: {{ .Values.config.name }}
         - name: CONFIG_PORT
           value: "{{ .Values.config.inner_port }}"
         - name: POSTGRES_DB

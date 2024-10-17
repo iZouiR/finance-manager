@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.budget_planning.name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: {{ .Values.budget_planning.name }}
+spec:
+  replicas: {{ .Values.budget_planning.deployment.replicas }}
+  selector:
+    matchLabels:
+      tier: {{ .Values.budget_planning.name }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.budget_planning.name }}
+    spec:
+      containers:
+        - image: {{ .Values.budget_planning.deployment.image }}
+          name: {{ .Values.budget_planning.name }}
+          env:
+            - name: DISCOVERY_PORT
+              value: "{{ .Values.discovery.inner_port }}"
+            - name: CONFIG_PORT
+              value: "{{ .Values.config.inner_port }}"
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql_db.name }}
+                  key: db
+            - name: DATASOURCE_URL
+              value: jdbc:postgresql://{{ .Values.postgresql_db.name }}:{{ .Values.postgresql_db.inner_port }}/${POSTGRES_DB}
+            - name: DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql_db.name }}
+                  key: username
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql_db.name }}
+                  key: password
+      restartPolicy: {{ .Values.budget_planning.deployment.restartPolicy }}

@@ -6,20 +6,25 @@ databaseChangeLog:
         - sql:
             sql: >-
               CREATE TYPE INCOME_TYPE AS ENUM ('TYPE_TRANSFER', 'TYPE_SALARY', 'TYPE_CASHBACK')
+        - createSequence:
+            sequenceName: income_sequence
+            dataType: bigint
         - createTable:
             tableName: income
             columns:
               - column:
                   name: id
-                  type: bigserial
+                  type: bigint
+                  defaultValueSequenceNext: income_sequence
                   constraints:
                     primaryKey: true
               - column:
-                  name: transaction
+                  name: transaction_id
                   type: bigint
                   constraints:
                     foreignKeyName: income_to_transaction_id_fk
                     references: transaction(id)
+                    deleteCascade: true
               - column:
                   name: type
                   type: INCOME_TYPE

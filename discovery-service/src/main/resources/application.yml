@@ -1,8 +1,8 @@
 spring:
   application:
-    name: ${DISCOVERY_NAME}
+    name: discovery
   config:
-    import: configserver:http://${CONFIG_NAME}:${CONFIG_PORT}
+    import: configserver:http://config:${CONFIG_PORT}
   cloud:
     config:
       fail-fast: true
