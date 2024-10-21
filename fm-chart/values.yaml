@@ -64,3 +64,18 @@ gateway:
     restartPolicy: Always
   service:
     type: LoadBalancer
+
+keycloak:
+  name: "keycloak"
+  inner_port: 8080
+  external_port: 8080
+  secrets:
+    kc_bootstrap_admin_username: "admin"
+    kc_bootstrap_admin_password: "admin"
+    kc_db: "postgres"
+  deployment:
+    replicas: 1
+    image: "quay.io/keycloak/keycloak:26.0.0"
+#    restartPolicy: Always
+  service:
+    type: LoadBalancer
