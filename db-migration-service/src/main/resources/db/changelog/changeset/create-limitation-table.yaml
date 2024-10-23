@@ -28,6 +28,13 @@ databaseChangeLog:
                     nullable: false
                     checkConstraint: amount > 0
               - column:
+                  name: spent
+                  type: money
+                  defaultValue: "0"
+                  constraints:
+                    nullable: false
+                    checkConstraint: spent >= 0
+              - column:
                   name: start_date
                   type: timestamp
                   defaultValueDate: NOW()
@@ -40,3 +47,9 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     checkConstraint: end_date > NOW()
+              - column:
+                  name: reached
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
