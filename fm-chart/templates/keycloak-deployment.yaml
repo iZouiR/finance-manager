@@ -36,8 +36,13 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.keycloak.name }}
                   key: kc_db
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql_db.name }}
+                  key: db
             - name: KC_DB_URL
-              value: jdbc:postgresql://{{ .Values.postgresql_db.name }}:{{ .Values.postgresql_db.inner_port }}/{{ .Values.postgresql_db.name }}
+              value: jdbc:postgresql://{{ .Values.postgresql_db.name }}:{{ .Values.postgresql_db.inner_port }}/${POSTGRES_DB}
             - name: KC_DB_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -51,4 +56,4 @@ spec:
           ports:
             - containerPort: {{ .Values.keycloak.inner_port }}
               protocol: TCP
-      restartPolicy: {{ .Values.keycloak.deployment.restartPolicy }}
+      restartPolicy: {{ .Values.keycloak.deployment.restartPolicy | default "Always" }}
