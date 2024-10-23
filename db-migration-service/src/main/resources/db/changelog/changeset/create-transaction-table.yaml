@@ -6,16 +6,20 @@ databaseChangeLog:
         - sql:
             sql: >-
               CREATE TYPE TRANSACTION_TYPE AS ENUM ('TYPE_INCOME', 'TYPE_EXPENSE')
+        - createSequence:
+            sequenceName: transaction_sequence
+            dataType: bigint
         - createTable:
             tableName: transaction
             columns:
               - column:
                   name: id
-                  type: bigserial
+                  type: bigint
+                  defaultValueSequenceNext: transaction_sequence
                   constraints:
                     primaryKey: true
               - column:
-                  name: account
+                  name: account_id
                   type: bigint
                   constraints:
                     foreignKeyName: transaction_to_account_id_fk
@@ -30,8 +34,11 @@ databaseChangeLog:
                   type: money
                   constraints:
                     nullable: false
+                    checkConstraint: amount > 0
               - column:
                   name: date
                   type: timestamp
+                  defaultValueDate: NOW()
                   constraints:
                     nullable: false
+                    checkConstraint: date <= NOW()

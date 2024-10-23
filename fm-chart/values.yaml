@@ -1,3 +1,19 @@
+postgresql_db:
+  name: "postgresql-db"
+  inner_port: 5432
+  external_port: 5432
+  secrets:
+    hostname: "postgres"
+    db: "postgres"
+    username: "postgres"
+    password: "postgres"
+  deployment:
+    replicas: 1
+    image: "postgres:latest"
+    restartPolicy: Always
+  service:
+    type: LoadBalancer
+
 config:
   name: "config"
   inner_port: 8762
@@ -24,18 +40,27 @@ discovery:
   service:
     type: LoadBalancer
 
-postgresql_db:
-  name: "postgresql-db"
-  inner_port: 5432
-  external_port: 5432
-  secrets:
-    hostname: ""
-    db: ""
-    username: ""
-    password: ""
+transaction:
+  name: "transaction"
   deployment:
-    replicas: 1
-    image: "postgres:latest"
+    replicas: 2
+    image: "izouir/fm-transaction:1.0"
+    restartPolicy: Always
+
+budget_planning:
+  name: "budget-planning"
+  deployment:
+    replicas: 2
+    image: "izouir/fm-budget-planning:1.0"
+    restartPolicy: Always
+
+gateway:
+  name: "gateway"
+  inner_port: 8765
+  external_port: 8765
+  deployment:
+    replicas: 3
+    image: "izouir/fm-gateway:1.0"
     restartPolicy: Always
   service:
     type: LoadBalancer

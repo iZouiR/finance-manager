@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: budget-planning
+  config:
+    import: configserver:http://config:${CONFIG_PORT}
+  cloud:
+    config:
+      fail-fast: true

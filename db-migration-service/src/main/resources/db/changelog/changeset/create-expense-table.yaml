@@ -6,20 +6,25 @@ databaseChangeLog:
         - sql:
             sql: >-
               CREATE TYPE EXPENSE_CATEGORY AS ENUM ('CATEGORY_FOOD', 'CATEGORY_TECH', 'CATEGORY_ENTERTAINMENT', 'CATEGORY_OTHER')
+        - createSequence:
+            sequenceName: expense_sequence
+            dataType: bigint
         - createTable:
             tableName: expense
             columns:
               - column:
                   name: id
-                  type: bigserial
+                  type: bigint
+                  defaultValueSequenceNext: expense_sequence
                   constraints:
                     primaryKey: true
               - column:
-                  name: transaction
+                  name: transaction_id
                   type: bigint
                   constraints:
                     foreignKeyName: expense_to_transaction_id_fk
                     references: transaction(id)
+                    deleteCascade: true
               - column:
                   name: category
                   type: EXPENSE_CATEGORY
