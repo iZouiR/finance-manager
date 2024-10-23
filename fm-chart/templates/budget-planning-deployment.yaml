@@ -22,7 +22,9 @@ spec:
             - name: DISCOVERY_PORT
               value: "{{ .Values.discovery.inner_port }}"
             - name: CONFIG_PORT
-              value: "{{ .Values.config.inner_port }}"
+              value: {{ .Values.config.inner_port }}
+            - name: KAFKA_PORT
+              value: {{ .Values.kafka.inner_port }}
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:

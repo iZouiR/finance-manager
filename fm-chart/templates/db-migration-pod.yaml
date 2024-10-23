@@ -11,7 +11,7 @@ spec:
       name: {{ .Values.db_migration.name }}
       env:
         - name: CONFIG_PORT
-          value: "{{ .Values.config.inner_port }}"
+          value: {{ .Values.config.inner_port }}
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef:
