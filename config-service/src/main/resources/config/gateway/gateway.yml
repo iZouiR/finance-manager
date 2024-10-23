@@ -11,6 +11,12 @@ spring:
           predicates:
             - Path=/budget-planning-api/**
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${KEYCLOAK_IP:172.17.0.1}:${KEYCLOAK_PORT}/realms/finance-manager
+
 eureka:
   client:
     serviceUrl:
