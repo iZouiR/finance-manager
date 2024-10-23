@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-on-transaction-update-limitation-spent
+      author: Timofey Kozlov
+      changes:
+        - sqlFile:
+            path: db/changelog/changeset/sql/on-transaction-update-limitation-spent.sql

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import lombok.Data;
 
@@ -30,6 +31,11 @@ public class LimitationDto {
     @Schema(description = "Money amount", example = "123.45")
     private BigDecimal amount;
 
+    @NotNull(message = "Spent can't be null")
+    @PositiveOrZero(message = "Spent must be greater than or equal to 0")
+    @Schema(description = "Money spent", example = "123.45")
+    private BigDecimal spent;
+
     @NotNull(message = "Limitation start date can't be null")
     @FutureOrPresent(message = "Limitation must start in the future or at the moment")
     @Schema(description = "Limitation start date", example = "2021-03-24 16:34:26.666")
@@ -39,4 +45,8 @@ public class LimitationDto {
     @Future(message = "Limitation must end in the future")
     @Schema(description = "Limitation end date", example = "2021-03-24 16:34:26.666")
     private Timestamp endDate;
+
+    @NotNull(message = "Reached flag can't be null")
+    @Schema(description = "Reached flag", example = "true")
+    private Boolean reached;
 }

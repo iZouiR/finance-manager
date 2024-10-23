@@ -11,5 +11,5 @@ spec:
       name: {{ .Values.config.name }}
       env:
         - name: CONFIG_PORT
-          value: "{{ .Values.config.inner_port }}"
+          value: {{ .Values.config.inner_port }}
   restartPolicy: {{ .Values.config.pod.restartPolicy }}

@@ -14,6 +14,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/create-on-transaction-change-balance-trigger.yaml
   - include:
+      file: db/changelog/changeset/create-on-transaction-update-limitation-spent-trigger.yaml
+  - include:
       file: db/changelog/changeset/create-on-income-check-transaction-type-trigger.yaml
   - include:
       file: db/changelog/changeset/create-on-expense-check-transaction-type-trigger.yaml

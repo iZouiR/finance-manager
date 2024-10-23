@@ -38,9 +38,15 @@ public class Limitation {
     @Column(name = "amount", columnDefinition = "MONEY NOT NULL CHECK (amount > 0)")
     private BigDecimal amount;
 
+    @Column(name = "spent", columnDefinition = "MONEY NOT NULL DEFAULT 0 CHECK (spent >= 0)")
+    private BigDecimal spent;
+
     @Column(name = "start_date", columnDefinition = "TIMESTAMP NOT NULL DEFAULT NOW() CHECK (start_date >= NOW())")
     private Timestamp startDate;
 
     @Column(name = "end_date", columnDefinition = "TIMESTAMP NOT NULL CHECK (end_date > NOW())")
     private Timestamp endDate;
+
+    @Column(name = "reached", columnDefinition = "BOOLEAN NOT NULL DEFAULT FALSE)")
+    private Boolean reached;
 }

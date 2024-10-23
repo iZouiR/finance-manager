@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.kafka.name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: {{ .Values.kafka.name }}
+spec:
+  replicas: {{ .Values.kafka.deployment.replicas }}
+  selector:
+    matchLabels:
+      tier: {{ .Values.kafka.name }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.kafka.name }}
+    spec:
+      containers:
+        - image: {{ .Values.kafka.deployment.image }}
+          name: {{ .Values.kafka.name }}
+      restartPolicy: {{ .Values.kafka.deployment.restartPolicy }}
