@@ -51,11 +51,13 @@ services:
     environment:
       CONFIG_PORT: ${CONFIG_PORT}
       DISCOVERY_PORT: ${DISCOVERY_PORT}
+      KAFKA_PORT: ${KAFKA_PORT}
       DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}
       DATASOURCE_USERNAME: ${POSTGRES_USER}
       DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
       - discovery
+      - kafka
 
   budget-planning:
     container_name: budget-planning
@@ -64,11 +66,13 @@ services:
     environment:
       CONFIG_PORT: ${CONFIG_PORT}
       DISCOVERY_PORT: ${DISCOVERY_PORT}
+      KAFKA_PORT: ${KAFKA_PORT}
       DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}
       DATASOURCE_USERNAME: ${POSTGRES_USER}
       DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
       - discovery
+      - kafka
 
   gateway:
     container_name: gateway
@@ -98,3 +102,10 @@ services:
       - postgresql-db
     ports:
       - ${KEYCLOAK_PORT}:8080
+
+  kafka:
+    container_name: kafka
+    image: apache/kafka:3.8.0
+    restart: on-failure
+    ports:
+      - ${KAFKA_PORT}:9092
