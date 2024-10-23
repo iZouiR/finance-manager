@@ -9,6 +9,13 @@ spring:
       generate-ddl: false
       hibernate:
         ddl-auto: validate
+  kafka:
+    bootstrap-servers: kafka:${KAFKA_PORT}
+    consumer:
+      group-id: "transaction"
+      auto-offset-reset: earliest
+      properties:
+        topic-transaction: "transaction"
 
 eureka:
   client:

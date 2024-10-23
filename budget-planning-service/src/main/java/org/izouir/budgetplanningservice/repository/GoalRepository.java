@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface GoalRepository extends JpaRepository<Goal, Long> {
-    @Query("SELECT g FROM Goal g WHERE g.account.id = ?1 AND g.until > current_timestamp()")
+    @Query("SELECT g FROM Goal g WHERE g.account.id = ?1 " +
+            "AND g.until > current_timestamp() AND g.achieved = false")
     List<Goal> findActualByAccount_Id(Long accountId);
 }

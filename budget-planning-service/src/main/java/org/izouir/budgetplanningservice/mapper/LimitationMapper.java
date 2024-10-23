@@ -14,8 +14,10 @@ public class LimitationMapper {
                 .id(dto.getId())
                 .account(account)
                 .amount(dto.getAmount())
+                .spent(dto.getSpent())
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
+                .reached(dto.getReached())
                 .build();
     }
 
@@ -24,8 +26,10 @@ public class LimitationMapper {
                 .id(entity.getId())
                 .accountId(entity.getAccount().getId())
                 .amount(entity.getAmount())
+                .spent(entity.getSpent())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
+                .reached(entity.getReached())
                 .build();
     }
 
