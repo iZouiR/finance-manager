@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface LimitationRepository extends JpaRepository<Limitation, Long> {
-    @Query("SELECT l FROM Limitation l WHERE l.account.id = ?1 AND l.startDate <= current_timestamp() AND l.endDate > current_timestamp()")
+    @Query("SELECT l FROM Limitation l WHERE l.account.id = ?1 " +
+            "AND l.startDate <= current_timestamp() AND l.endDate > current_timestamp() AND l.reached = false")
     List<Limitation> findActualByAccount_Id(Long accountId);
 }

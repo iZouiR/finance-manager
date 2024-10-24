@@ -31,6 +31,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
+    implementation("org.springframework.kafka:spring-kafka:3.2.4")
 
     // Database
     implementation("org.postgresql:postgresql")

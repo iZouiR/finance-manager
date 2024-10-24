@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.notification.name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tier: {{ .Values.notification.name }}
+spec:
+  replicas: {{ .Values.notification.deployment.replicas }}
+  selector:
+    matchLabels:
+      tier: {{ .Values.notification.name }}
+  template:
+    metadata:
+      labels:
+        tier: {{ .Values.notification.name }}
+    spec:
+      containers:
+        - image: {{ .Values.notification.deployment.image }}
+          name: {{ .Values.notification.name }}
+          env:
+            - name: DISCOVERY_PORT
+              value: "{{ .Values.discovery.inner_port }}"
+            - name: CONFIG_PORT
+              value: {{ .Values.config.inner_port }}
+            - name: KAFKA_PORT
+              value: {{ .Values.kafka.inner_port }}
+      restartPolicy: {{ .Values.notification.deployment.restartPolicy }}
