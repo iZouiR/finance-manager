@@ -65,6 +65,13 @@ budget_planning:
     image: "izouir/fm-budget-planning:1.0"
     restartPolicy: Always
 
+notification:
+  name: "notification"
+  deployment:
+    replicas: 3
+    image: "izouir/fm-notification:1.0"
+    restartPolicy: Always
+
 gateway:
   name: "gateway"
   inner_port: 8765
