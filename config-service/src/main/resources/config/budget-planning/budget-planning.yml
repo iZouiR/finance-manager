@@ -16,6 +16,10 @@ spring:
       auto-offset-reset: earliest
       properties:
         topic-transaction: "transaction"
+    producer:
+      properties:
+        topic-goal: "goal"
+        topic-limitation: "limitation"
 
 eureka:
   client:
